@@ -311,6 +311,9 @@ class ScriptInfo(object):
     def __init__(self, app_import_path=None, create_app=None):
         #: Optionally the import path for the Flask application.
         self.app_import_path = app_import_path or os.environ.get('FLASK_APP')
+        #: if self.app_import_path is a folder default to use the `__init__.py`
+        if os.path.isdir(self.app_import_path):
+            self.app_import_path = self.app_import_path + '/__init__.py'
         #: Optionally a function that is passed the script info to create
         #: the instance of the application.
         self.create_app = create_app
